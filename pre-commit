@@ -1,0 +1,14 @@
+#!/bin/sh
+# Don't allow committing of files that include the flag DO_NOT_COMMIT
+
+if git diff --staged | grep -q "DO_NOT_COMMIT"
+then
+    echo "Error: You've attempted to commit a change that you've marked to not be committed."
+    echo
+    echo $(git diff --staged | grep -n "DO_NOT_COMMIT")
+    echo
+    echo "If you'd like to commit this change, remove the DO_NOT_COMMIT"
+    echo "flag from the line and re-commit."
+    echo
+    exit 1
+fi
